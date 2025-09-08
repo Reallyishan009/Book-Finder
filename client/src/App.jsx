@@ -66,9 +66,9 @@ function App() {
       setRecommendationsLoading(true);
       // Extract subjects from favorite books
       const allSubjects = favoriteBooks
-        .flatMap(book => book.subjects || [])
-        .filter(subject => subject && subject.length > 0);
-      
+        .flatMap((book) => book.subjects || [])
+        .filter((subject) => subject && subject.length > 0);
+
       if (allSubjects.length === 0) {
         setRecommendations([]);
         return;
@@ -76,17 +76,20 @@ function App() {
 
       // Get unique subjects
       const uniqueSubjects = [...new Set(allSubjects)].slice(0, 5);
-      
+
       const response = await fetch(
-        `/api/books/recommendations?subjects=${encodeURIComponent(uniqueSubjects.join(','))}`
+        `/api/books/recommendations?subjects=${encodeURIComponent(
+          uniqueSubjects.join(",")
+        )}`
       );
       const data = await response.json();
-      
+
       // Filter out books that are already in favorites
-      const filteredRecommendations = data.books?.filter(
-        book => !favoriteBooks.some(fav => fav.id === book.id)
-      ) || [];
-      
+      const filteredRecommendations =
+        data.books?.filter(
+          (book) => !favoriteBooks.some((fav) => fav.id === book.id)
+        ) || [];
+
       setRecommendations(filteredRecommendations);
     } catch (error) {
       console.error("Error loading recommendations:", error);
@@ -136,28 +139,30 @@ function App() {
       const exportData = {
         exportDate: new Date().toISOString(),
         totalBooks: favorites.length,
-        books: favorites.map(book => ({
+        books: favorites.map((book) => ({
           title: book.title,
           authors: book.authors,
           publishedDate: book.publishedDate,
           subjects: book.subjects,
-          dateAdded: book.dateAdded
-        }))
+          dateAdded: book.dateAdded,
+        })),
       };
-      
+
       const dataStr = JSON.stringify(exportData, null, 2);
-      const dataBlob = new Blob([dataStr], { type: 'application/json' });
+      const dataBlob = new Blob([dataStr], { type: "application/json" });
       const url = URL.createObjectURL(dataBlob);
-      
-      const link = document.createElement('a');
+
+      const link = document.createElement("a");
       link.href = url;
-      link.download = `book-favorites-${new Date().toISOString().split('T')[0]}.json`;
+      link.download = `book-favorites-${
+        new Date().toISOString().split("T")[0]
+      }.json`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
     } catch (error) {
-      console.error('Error exporting favorites:', error);
+      console.error("Error exporting favorites:", error);
     }
   };
 
@@ -554,7 +559,10 @@ function App() {
               </div>
             ) : recommendations.length === 0 ? (
               <div className="no-recommendations">
-                <p>Add some books to your favorites to get personalized recommendations!</p>
+                <p>
+                  Add some books to your favorites to get personalized
+                  recommendations!
+                </p>
                 <button
                   onClick={() => setActiveTab("search")}
                   className="search-redirect-btn"
