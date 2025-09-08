@@ -2,6 +2,8 @@
 
 A modern, full-stack book search application designed for college students to discover, search, and manage academic books. Built with React and Node.js, featuring intelligent search capabilities, personalized recommendations, and seamless user experience.
 
+# LIVE APP: [https://book-finder-omega-ten.vercel.app/]
+
 ## 🎯 Overview
 
 Book Finder is a comprehensive web application that helps students find academic books through the Open Library API. The application provides advanced search functionality with real-time autocomplete, trending book discovery, favorites management, and personalized recommendations based on user preferences.
